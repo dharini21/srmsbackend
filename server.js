@@ -54,7 +54,7 @@ app.use('/api/subject', subjectRoutes);
 app.use('/api/result', resultRoutes);
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/', (req, res) => {
   res.json({ status: 'OK', message: 'Student Result Management API is running' });
 });
 
