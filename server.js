@@ -11,10 +11,23 @@ import subjectRoutes from './routes/subjectRoutes.js';
 import resultRoutes from './routes/resultRoutes.js';
 
 const app = express();
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://srmsfront.vercel.app'
+];
 
-// Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://srmsfront.vercel.app'],
+  origin: (origin, callback) => {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      /^https:\/\/srmsfront-[\w-]+\.vercel\.app$/.test(origin)
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(json());
